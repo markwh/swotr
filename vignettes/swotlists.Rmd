@@ -12,8 +12,11 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 6
 )
+
+set.seed(3682)
 ```
 
 ## DAWG matrices
@@ -31,7 +34,7 @@ plot_DAWG(mat1)
 
 Variables that vary only in time or only in space can be converted from vectors to DAWG matrices using the `swot_vec2mat` function. For example:
 
-```{r, fig.show = 'hold'}
+```{r, fig.width = 3, fig.show = "hold"}
 time_vec <- rnorm(5) # vector of a temporal variable
 space_vec <- rnorm(4) # vector of a spatial variable
 
@@ -90,7 +93,7 @@ ncfile <- system.file("extdata", "SacramentoDownstream.nc", package = "swotr")
 
 saclist1 <- nc_list(ncfile)
 
-str(saclist1)
+str(saclist1, nchar.max = 50)
 ```
 
 Note that this is not a swotlist, as it contains elements that are not matrices, and it contains matrices that have differing numbers of rows (9 for reach data, 93 for cross-section data). But it contains all of the data in the netcdf should you need it.
@@ -99,7 +102,7 @@ Since the McFLI community works principally with reach-averaged data, a useful a
 
 ```{r}
 saclist2 <- nc_reach(ncfile)
-str(saclist2)
+str(saclist2, nchar.max = 50)
 ```
 
 Note that `saclist2` also includes a `QWBM` attribute. This is to store the water balance model (WBM) estimate of discharge. Since this is a scalar, it would be extremely redundant to store as a DAWG matrix, but it is often useful to store with the other reach variables. Keeping it as an attribute means the object structure is not affected, and it is still a swotlist containing only DAWG matrices. 
@@ -181,7 +184,7 @@ plot_DAWG(dAmat)
 
 Since the zero reference of `dA` is arbitrary, `swotr`'s dA-related functions include an argument specifying where to set `dA = 0`. Options are "first" for the first observation in time  (this is typically the default), "minimum" or "median". Existing DAWG matrices of `dA` can have their zero point adjusted via `rezero_dA`. 
 
-```{r, fig.show = "hold"}
+```{r, fig.width = 3, fig.show = "hold"}
 plot_DAWG(rezero_dA(dAmat, zer = "minimum"))
 plot_DAWG(rezero_dA(dAmat, zer = "median"))
 ```
@@ -196,7 +199,11 @@ realA0(saclist2, zero = "first")
 
 The `swotr` package is designed to interface with the [bamr](http://github.com/markwh/bamr) package for estimation of flow-law parameters and discharge. To turn a swotlist into a `bamdata` object, use swot_bamdata:
 
-```{r}
-sacbd <- swot_bamdata()
+```{r, cache = TRUE}
+library(bamr)
+sacbd <- swot_bamdata(saclist3)
+sac_est <- bam_estimate(sacbd, variant = "manning", iter = 2000)
+
+bam_hydrograph(sac_est, qobs = saclist3$Q[1,])
 ```
 
