@@ -45,7 +45,7 @@ Unfortunately, `swot_vec2mat` is too dumb to work if `pattern` has the same numb
 
 ## swotlists
 
-A swotlist is, basically, a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It's just a kind of list that many `swotr` functions take as input. For example, the following is a perfectly valid swotlist. 
+A swotlist is essentially a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It's just a kind of list that many `swotr` functions take as input. For example, the following is a perfectly valid swotlist. 
 
 ```{r}
 list1 <- list(var1 = mat1, var2 = mat1 + rnorm(20))
@@ -61,6 +61,22 @@ A swotlist is a compact, flexible, and easily accessible way of storing SWOT-lik
 
 Although there's no requirement to what a swotlist can contain, some `swotr` functions (and other functions that may be added to swotr or released in a companion package in the future) expect certain DAWG matrices to be present. 
 
+## Tidying and untidying swotlists
+
+Although a handy data format, swotlists are not perfect for using with many R utilities that expect `data.frame`s and related "tidy" tabular data representations. (See [the tidyverse](https://www.tidyverse.org/) for some examples of how tidiness has permeated the R ecosystem.) `swotr` has two functions for switching between swotlist representation and tidy representation of SWOT-like data. To turn a swotlist into a tidy `data.frame`, use `swot_tidy`.
+
+```{r}
+tidydf1 <- swot_tidy(list1)
+str(tidydf1)
+```
+
+To go back to the original swotlist for, use `swot_untidy`. 
+
+```{r}
+str(swot_untidy(tidydf1))
+```
+
+`swot_tidy` is used under the hood for many of `swotr`'s plotting functions (and some other functions), since ggplot2 takes a `data.frame` as input.
 
 ## netcdfs
 
@@ -69,6 +85,117 @@ Although there's no requirement to what a swotlist can contain, some `swotr` fun
 The `nc_list` function reads all data from a netcdf file into a single list. 
 
 ```{r}
+ncfile <- system.file("extdata", "SacramentoDownstream.nc", package = "swotr")
 
+saclist1 <- nc_list(ncfile)
+
+str(saclist1)
+```
+
+Note that this is not a swotlist, as it contains elements that are not matrices, and it contains matrices that have differing numbers of rows (9 for reach data, 93 for cross-section data). But it contains all of the data in the netcdf should you need it.
+
+Since the McFLI community works principally with reach-averaged data, a useful alternative to `nc_list`, `nc_reach`, is proviced. Unlike `nc_list`, `nc_reach` returns a swotlist of only reach-averaged quantities. 
+
+```{r}
+saclist2 <- nc_reach(ncfile)
+str(saclist2)
+```
+
+Note that `saclist2` also includes a `QWBM` attribute. This is to store the water balance model (WBM) estimate of discharge. Since this is a scalar, it would be extremely redundant to store as a DAWG matrix, but it is often useful to store with the other reach variables. Keeping it as an attribute means the object structure is not affected, and it is still a swotlist containing only DAWG matrices. 
+
+Since `saclist2` is a swotlist, we can plot it as follows:
+
+```{r}
+swot_plot(saclist2)
+```
+
+To get a better detail of area, width, and slope, we can plot just those variables on a log axis as follows
+
+```{r}
+swot_plot(saclist2, vars = c("A", "W", "S")) + scale_y_log10()
+```
+
+
+An optional argument, `good_only = TRUE` can be passed to `nc_reach`; this will read in only reaches flagged as "good" in the netcdf file. Since all reaches are "good" in the Downstream Sacramento, this does not affect this particular case. 
+
+```{r}
+saclist2 <- nc_reach(ncfile, good_only = TRUE)
+```
+
+## Subsetting swotlists
+
+In the above plot it appears there are 4 potentially anomalous slope values in reach 1. It would be helpful to look just at that location's data to find out more. We can use the `swot_sset` function to subset an entire swotlist by time and/or location, and then run `swot_plot` on the subsetted result.
+
+```{r}
+saclist2 %>% 
+  swot_sset(keeplocs = 1) %>% 
+  swot_plot(vars = c("A", "W", "S"))
+```
+
+Indeed, we may want to remove those anomalous times. There are a couple of ways to do this. First, using `swot_sset`:
+
+```{r}
+badtimes <- which(saclist2$S > 6e-4, arr.ind = TRUE)[, 2] # Get just the columns (times) with S > 6e-4
+saclist3 <- swot_sset(saclist2, keeptimes = -badtimes) # Use minus sign to omit, rather than keep, badtimes
+
+swot_plot(saclist3)
+```
+
+And now the anomalous slopes are gone, as well as all other variables' data from those 4 times. 
+
+If we thought the entire reach was bad we can removed 1 of 9 reaches instead of 4 of 154 times:
+
+```{r}
+saclist4 <- swot_sset(saclist2, keeplocs = -1) # again, negative to keep everything except 1
+
+swot_plot(saclist4)
+```
+
+Now there are only 8 reaches, and the remaining reaches have been renumbered to replace the former reach 1. 
+
+Another way to do the same operations is to replace the anomalous values with `NA`s and use `swot_purge_nas` on the result.
+
+```{r}
+saclist5 <- saclist2 # Make a copy before replacing values
+saclist5$S[saclist5$S > 6e-4] <- NA
+```
+
+It may be perfectly fine to just keep the dataset with missing (`NA`) values, but some functions that expect complete data will not work. Purging of times or locations with `NA`s present is easy with `swot_purge_nas`:
+
+```{r}
+saclist6 <- swot_purge_nas(saclist5, purge = "times") # Result is equivalent to saclist3
+saclist7 <- swot_purge_nas(saclist5, purge = "locs") # Result is equivalent to saclist4
+```
+
+## dA operations
+
+`swotr` contains a few functions for working with partial cross-sectional area (`dA`) observations. 
+
+First, `dA` can be calculated from height and width observations via `calcdA_vec` (for single-location vectors) and `calcdA_mat` (for DAWG matrices). ***Note that the summation-as-integration method used by these functions is not robust to height and width measurement error and should be used with this imprecision in mind.***
+
+```{r}
+dAmat <- calcdA_mat(w = saclist2$W, h = saclist2$H)
+plot_DAWG(dAmat)
+```
+
+Since the zero reference of `dA` is arbitrary, `swotr`'s dA-related functions include an argument specifying where to set `dA = 0`. Options are "first" for the first observation in time  (this is typically the default), "minimum" or "median". Existing DAWG matrices of `dA` can have their zero point adjusted via `rezero_dA`. 
+
+```{r, fig.show = "hold"}
+plot_DAWG(rezero_dA(dAmat, zer = "minimum"))
+plot_DAWG(rezero_dA(dAmat, zer = "median"))
+```
+
+The full cross-sectional area is obtained by adding `dA` to $A_0$, the constant-in-time unobserved part of cross-sectional area. The value of $A_0$ depends on where dA is referenced to zero. If a swotlist contains a cross-sectional area DAWG matrix called `A`, the true $A_0$ vector can be obtained using the function `realA0`. This also has a `zero` argument, which should match the zero reference of the swotlist's `dA` matrix. 
+
+```{r}
+realA0(saclist2, zero = "first")
+```
+
+## Interfacing with bamr
+
+The `swotr` package is designed to interface with the [bamr](http://github.com/markwh/bamr) package for estimation of flow-law parameters and discharge. To turn a swotlist into a `bamdata` object, use swot_bamdata:
+
+```{r}
+sacbd <- swot_bamdata()
 ```
 
