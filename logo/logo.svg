@@ -13,7 +13,7 @@
    id="svg3559"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="global-146441.svg">
+   sodipodi:docname="logo.svg">
   <metadata
      id="metadata4093">
     <rdf:RDF>
@@ -22,7 +22,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -82,7 +82,7 @@
      id="namedview4089"
      showgrid="false"
      inkscape:zoom="0.66162791"
-     inkscape:cx="274.11965"
+     inkscape:cx="277.1425"
      inkscape:cy="393.34946"
      inkscape:window-x="0"
      inkscape:window-y="0"
@@ -92,8 +92,8 @@
      id="g8941"
      transform="matrix(0.47246932,0,0,0.47246932,889.5321,472.46725)">
     <path
-       transform="matrix(-8.225708,0,0,8.6461909,4043.2119,-805.81138)"
-       d="m 489.70123,278.10193 c 0,130.63621 -111.65341,236.53778 -249.38488,236.53778 -137.73148,0 -249.3848925,-105.90157 -249.3848925,-236.53778 0,-130.63621 111.6534125,-236.537782 249.3848925,-236.537782 137.73147,0 249.38488,105.901572 249.38488,236.537782 z"
+       transform="matrix(-8.225708,0,0,8.6461909,3925.0634,-805.81138)"
+       d="m 489.70123,278.10193 a 249.38489,236.53778 0 1 1 -498.7697725,0 249.38489,236.53778 0 1 1 498.7697725,0 z"
        sodipodi:ry="236.53778"
        sodipodi:rx="249.38489"
        sodipodi:cy="278.10193"
@@ -102,7 +102,7 @@
        style="fill:#267700;fill-opacity:0.34883722;stroke:#000029;stroke-width:2.64766622;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        sodipodi:type="arc" />
     <g
-       transform="translate(1885.2135,5584.0502)"
+       transform="translate(1767.065,5584.0502)"
        clip-path="url(#clipPath8904)"
        id="g8875">
       <path
@@ -169,7 +169,7 @@
     <g
        clip-path="url(#clipPath8937)"
        id="g7352"
-       transform="matrix(13.646188,0,0,14.485269,-6648.5361,-13429.197)"
+       transform="matrix(13.646188,0,0,14.485269,-6766.6846,-13429.197)"
        style="stroke:#354ade;stroke-width:1.07200563;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none">
       <g
          style="stroke:#354ade;stroke-width:2.06355405;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
@@ -445,7 +445,7 @@
     <g
        style="fill:#e23f42;fill-opacity:0.7069768;stroke:#000000"
        id="g4690"
-       transform="matrix(3.4356346,9.0434904,-9.0434904,3.4356346,18407.152,9921.6032)">
+       transform="matrix(3.4356346,9.0434904,-9.0434904,3.4356346,18289.002,9921.6032)">
       <path
          style="fill:#e23f42;fill-opacity:0.7069768;stroke-width:3;stroke-linecap:round;stroke-linejoin:round"
          inkscape:connector-curvature="0"

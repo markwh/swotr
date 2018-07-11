@@ -204,7 +204,7 @@ set.seed(36821)
 ```
 
 
-```{r, cache = FALSE}
+```{r, cache = TRUE}
 library(bamr)
 sacbd <- swot_bamdata(saclist3)
 sac_est <- bam_estimate(sacbd, variant = "manning", iter = 2000)
