@@ -349,6 +349,7 @@ swot_plot <- function(swotlist, vars = "all"){
 #' @param dawgmat a DAWG-formatted (space-down, time-across) matrix.
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 ggplot geom_line scale_color_gradient
+#' @export
 plot_DAWG <- function (dawgmat) {
   dawgdf <- as.data.frame(t(dawgmat)) %>%
     setNames(1:nrow(dawgmat)) %>%
