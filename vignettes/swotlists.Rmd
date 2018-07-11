@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
   fig.width = 6
 )
 
-set.seed(3682)
+
 ```
 
 ## DAWG matrices
@@ -199,7 +199,12 @@ realA0(saclist2, zero = "first")
 
 The `swotr` package is designed to interface with the [bamr](http://github.com/markwh/bamr) package for estimation of flow-law parameters and discharge. To turn a swotlist into a `bamdata` object, use swot_bamdata:
 
-```{r, cache = TRUE}
+```{r, echo = FALSE}
+set.seed(36821)
+```
+
+
+```{r, cache = FALSE}
 library(bamr)
 sacbd <- swot_bamdata(saclist3)
 sac_est <- bam_estimate(sacbd, variant = "manning", iter = 2000)
