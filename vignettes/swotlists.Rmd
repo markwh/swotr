@@ -1,0 +1,74 @@
+---
+title: "SWOTlists"
+author: "Mark Hagemann"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## DAWG matrices
+
+SWOT-like datasets contain variables defined at specific points in time and space. The Discharge Algorithm Working Group (DAWG) has adopted the convention of formatting such data as space-down, time-across matrices. I will refer to such a space-down, time-across matrix as a DAWG matrix. `swotr` contains a handy function for plotting DAWG matrices; that function is `plot_DAWG`. For example, we can generate a random DAWG matrix indexed in 4 locations and 5 times as follows:
+
+```{r}
+library(dplyr)
+library(ggplot2)
+mat1 <- matrix(rnorm(20), nrow = 4, ncol = 5)
+
+plot_DAWG(mat1)
+```
+
+Variables that vary only in time or only in space can be converted from vectors to DAWG matrices using the `swot_vec2mat` function. For example:
+
+```{r, fig.show = 'hold'}
+time_vec <- rnorm(5) # vector of a temporal variable
+space_vec <- rnorm(4) # vector of a spatial variable
+
+time_mat <- swot_vec2mat(time_vec, pattern = mat1) # mat1 is used as a pattern to get the matrix dimensions
+space_mat <- swot_vec2mat(space_vec, pattern = mat1) # automatically determines which dimension is variable
+
+plot_DAWG(time_mat) + ggtitle("temporal variable")
+plot_DAWG(space_mat) + ggtitle("spatial variable")
+```
+
+Unfortunately, `swot_vec2mat` is too dumb to work if `pattern` has the same number of rows as columns. 
+
+## swotlists
+
+A swotlist is, basically, a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It's just a kind of list that many `swotr` functions take as input. For example, the following is a perfectly valid swotlist. 
+
+```{r}
+list1 <- list(var1 = mat1, var2 = mat1 + rnorm(20))
+```
+
+The `swot_plot` function plots all variables (or optionally a subset thereof) within a swotlist. 
+
+```{r}
+swot_plot(list1)
+```
+
+A swotlist is a compact, flexible, and easily accessible way of storing SWOT-like data. But it is limited in that it can only contain matrices with the same dimensions as one another. Thanks to easy matrix representation of vectors (via `swot_vec2mat`) swotlists can represent a surprising variety of variables. 
+
+Although there's no requirement to what a swotlist can contain, some `swotr` functions (and other functions that may be added to swotr or released in a companion package in the future) expect certain DAWG matrices to be present. 
+
+
+## netcdfs
+
+`swotr` contains functions to make reading SWOT-like netcdf files easy. But in order to use these you'll need to have the `ncdf4` package installed. This in turn requires that you have the netcdf library installed on your computer. 
+
+The `nc_list` function reads all data from a netcdf file into a single list. 
+
+```{r}
+
+```
+
