@@ -23,6 +23,7 @@ SWOT-like datasets contain variables defined at specific points in time and spac
 ```{r}
 library(dplyr)
 library(ggplot2)
+library(swotr)
 mat1 <- matrix(rnorm(20), nrow = 4, ncol = 5)
 
 plot_DAWG(mat1)
