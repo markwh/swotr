@@ -150,6 +150,33 @@ swot_timelag <- function(swotlist, lags) {
   out
 }
 
+
+# Cross-sectional area functions ------------------------------------------
+
+#' Actual A0 values across locations of a swotlist
+#'
+#' Returns a vector of unobservable (via SWOT) cross-sectional areas for a given swotlist
+#'
+#' @param swotlist a list of swot-like matrices
+#' @param zero Where to reference the zero value of dA?
+#' @export
+realA0 <- function(swotlist,
+                   zero = c("first", "minimum", "median")) {
+  zero = match.arg(zero)
+
+  if (is.null(swotlist$A)) {
+    stop("swotlist must contain an A component.\n")
+  }
+
+  dA <- swotlist$A - swot_vec2mat(swotlist$A[, 1], swotlist$A)
+  if (zero != "none") {
+    dA <- rezero_dA(dA, zero = zero)
+  }
+
+  out <- (swotlist$A - dA)[, 1]
+  out
+}
+
 #' Adjust the zero-reference of partial cross-sectional area data.
 #'
 #' @param dAmat a DAWG-formatted matrix of partial cross-sectional area observations.
