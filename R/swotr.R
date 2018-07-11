@@ -49,7 +49,7 @@ swot_sset <- function(swotlist, keeptimes = 0L, keeplocs = 0L) {
   if (length(keeplocs == 1) && keeplocs == 0L)
     keeplocs <- 1:nr
 
-  out <- lapply(swotlist, `[`, keeplocs, keeptimes)
+  out <- lapply(swotlist, `[`, keeplocs, keeptimes, drop = FALSE)
 
   attr(out, "QWBM") <- attr(swotlist, "QWBM")
 
