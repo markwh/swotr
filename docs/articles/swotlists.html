@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SWOTlists • swotr</title>
+<title>swotlists • swotr</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="SWOTlists">
+<script src="../pkgdown.js"></script><meta property="og:title" content="swotlists">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -52,7 +52,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/swotlists.html">SWOTlists</a>
+      <a href="../articles/swotlists.html">swotlists</a>
     </li>
   </ul>
 </li>
@@ -69,10 +69,10 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>SWOTlists</h1>
+      <h1>swotlists</h1>
                         <h4 class="author">Mark Hagemann</h4>
             
-            <h4 class="date">2018-07-11</h4>
+            <h4 class="date">2018-07-12</h4>
       
       
       <div class="hidden name"><code>swotlists.Rmd</code></div>
@@ -81,10 +81,15 @@
 
     
     
+<div id="swot-like-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#swot-like-data" class="anchor"></a>SWOT-like data</h2>
+<p><strong>swotr</strong> is a package for working with SWOT-like data. Broadly, this means data observed at discrete times and locations within a river or river network. Data do not need to come from satellite remote sensing in order to be SWOT-like; the term can include in-situ, model-output, or purely synthetic data. But the underlying motivation is the upcoming SWOT satellite mission, so satellite remote sensing of discharge and hydrologic paramters is the presumed purpose in <strong>swotr</strong>’s development.</p>
+</div>
 <div id="dawg-matrices" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dawg-matrices" class="anchor"></a>DAWG matrices</h2>
-<p>SWOT-like datasets contain variables defined at specific points in time and space. The Discharge Algorithm Working Group (DAWG) has adopted the convention of formatting such data as space-down, time-across matrices. I will refer to such a space-down, time-across matrix as a DAWG matrix. <code>swotr</code> contains a handy function for plotting DAWG matrices; that function is <code>plot_DAWG</code>. For example, we can generate a random DAWG matrix indexed in 4 locations and 5 times as follows:</p>
+<p>SWOT-like datasets contain variables defined at specific points in time and space. The Discharge Algorithm Working Group (DAWG) has adopted the convention of formatting such data as space-down, time-across matrices. I will refer to such a space-down, time-across matrix as a DAWG matrix. <strong>swotr</strong> contains a handy function for plotting DAWG matrices; that function is <code>plot_DAWG</code>. For example, we can generate a random DAWG matrix indexed in 4 locations and 5 times as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Attaching package: 'dplyr'</span>
@@ -115,36 +120,36 @@ space_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/s
 <div id="swotlists" class="section level2">
 <h2 class="hasAnchor">
 <a href="#swotlists" class="anchor"></a>swotlists</h2>
-<p>A swotlist is essentially a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It’s just a kind of list that many <code>swotr</code> functions take as input. For example, the following is a perfectly valid swotlist.</p>
+<p>A swotlist is essentially a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It’s just a kind of list that many <strong>swotr</strong> functions take as input. For example, the following is a perfectly valid swotlist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">list1 &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">var1 =</span> mat1, <span class="dt">var2 =</span> mat1 <span class="op">+</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>))</code></pre></div>
 <p>The <code>swot_plot</code> function plots all variables (or optionally a subset thereof) within a swotlist.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/swot_plot.html">swot_plot</a></span>(list1)</code></pre></div>
 <p><img src="swotlists_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p>A swotlist is a compact, flexible, and easily accessible way of storing SWOT-like data. But it is limited in that it can only contain matrices with the same dimensions as one another. Thanks to easy matrix representation of vectors (via <code>swot_vec2mat</code>) swotlists can represent a surprising variety of variables.</p>
-<p>Although there’s no requirement to what a swotlist can contain, some <code>swotr</code> functions (and other functions that may be added to swotr or released in a companion package in the future) expect certain DAWG matrices to be present.</p>
+<p>Although there’s no requirement to what variables a swotlist can contain, some <strong>swotr</strong> functions (and other functions that may be added to swotr or released in a companion package in the future) expect certain DAWG matrices to be present.</p>
 </div>
 <div id="tidying-and-untidying-swotlists" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tidying-and-untidying-swotlists" class="anchor"></a>Tidying and untidying swotlists</h2>
-<p>Although a handy data format, swotlists are not perfect for using with many R utilities that expect <code>data.frame</code>s and related “tidy” tabular data representations. (See <a href="https://www.tidyverse.org/">the tidyverse</a> for some examples of how tidiness has permeated the R ecosystem.) <code>swotr</code> has two functions for switching between swotlist representation and tidy representation of SWOT-like data. To turn a swotlist into a tidy <code>data.frame</code>, use <code>swot_tidy</code>.</p>
+<p>Although a handy data format, swotlists are not perfect for using with many R utilities that expect <code>data.frame</code>s and related <a href="http://vita.had.co.nz/papers/tidy-data.pdf">“tidy”</a> tabular data representations. (See <a href="https://www.tidyverse.org/">the tidyverse</a> for some examples of how tidiness has permeated the R ecosystem.) <strong>swotr</strong> has two functions for switching between swotlist representation and tidy representation of SWOT-like data. To turn a swotlist into a tidy <code>data.frame</code>, use <code>swot_tidy</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidydf1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swot_tidy.html">swot_tidy</a></span>(list1)
 <span class="kw">str</span>(tidydf1)
 <span class="co">#&gt; 'data.frame':    20 obs. of  4 variables:</span>
-<span class="co">#&gt;  $ var1: num  -1.9003 0.3555 -1.3317 -0.0821 0.6752 ...</span>
-<span class="co">#&gt;  $ var2: num  0.393 0.66 -1.006 1.973 2.086 ...</span>
+<span class="co">#&gt;  $ var1: num  -0.132 0.827 -0.687 -1.542 -0.231 ...</span>
+<span class="co">#&gt;  $ var2: num  0.539 1.468 0.385 -1.618 0.236 ...</span>
 <span class="co">#&gt;  $ time: int  1 1 1 1 2 2 2 2 3 3 ...</span>
 <span class="co">#&gt;  $ loc : int  1 2 3 4 1 2 3 4 1 2 ...</span></code></pre></div>
 <p>To go back to the original swotlist for, use <code>swot_untidy</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw"><a href="../reference/swot_untidy.html">swot_untidy</a></span>(tidydf1))
 <span class="co">#&gt; List of 2</span>
-<span class="co">#&gt;  $ var1: num [1:4, 1:5] -1.9003 0.3555 -1.3317 -0.0821 0.6752 ...</span>
-<span class="co">#&gt;  $ var2: num [1:4, 1:5] 0.393 0.66 -1.006 1.973 2.086 ...</span></code></pre></div>
-<p><code>swot_tidy</code> is used under the hood for many of <code>swotr</code>’s plotting functions (and some other functions), since ggplot2 takes a <code>data.frame</code> as input.</p>
+<span class="co">#&gt;  $ var1: num [1:4, 1:5] -0.132 0.827 -0.687 -1.542 -0.231 ...</span>
+<span class="co">#&gt;  $ var2: num [1:4, 1:5] 0.539 1.468 0.385 -1.618 0.236 ...</span></code></pre></div>
+<p><code>swot_tidy</code> is used under the hood for many of <strong>swotr</strong>’s plotting functions (and some other functions), since ggplot2 takes a <code>data.frame</code> as input.</p>
 </div>
 <div id="netcdfs" class="section level2">
 <h2 class="hasAnchor">
 <a href="#netcdfs" class="anchor"></a>netcdfs</h2>
-<p><code>swotr</code> contains functions to make reading SWOT-like netcdf files easy. But in order to use these you’ll need to have the <code>ncdf4</code> package installed. This in turn requires that you have the netcdf library installed on your computer.</p>
+<p><strong>swotr</strong> contains functions to make reading SWOT-like netcdf files easy. But in order to use these you’ll need to have the <code>ncdf4</code> package installed. This in turn requires that you have the netcdf library installed on your computer.</p>
 <p>The <code>nc_list</code> function reads all data from a netcdf file into a single list.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ncfile &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"SacramentoDownstream.nc"</span>, <span class="dt">package =</span> <span class="st">"swotr"</span>)
 
@@ -229,12 +234,12 @@ saclist7 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sw
 <div id="da-operations" class="section level2">
 <h2 class="hasAnchor">
 <a href="#da-operations" class="anchor"></a>dA operations</h2>
-<p><code>swotr</code> contains a few functions for working with partial cross-sectional area (<code>dA</code>) observations.</p>
+<p><strong>swotr</strong> contains a few functions for working with partial cross-sectional area (<code>dA</code>) observations.</p>
 <p>First, <code>dA</code> can be calculated from height and width observations via <code>calcdA_vec</code> (for single-location vectors) and <code>calcdA_mat</code> (for DAWG matrices). <strong><em>Note that the summation-as-integration method used by these functions is not robust to height and width measurement error and should be used with this imprecision in mind.</em></strong></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dAmat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/calcdA_mat.html">calcdA_mat</a></span>(<span class="dt">w =</span> saclist2<span class="op">$</span>W, <span class="dt">h =</span> saclist2<span class="op">$</span>H)
 <span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(dAmat)</code></pre></div>
 <p><img src="swotlists_files/figure-html/unnamed-chunk-17-1.png" width="576"></p>
-<p>Since the zero reference of <code>dA</code> is arbitrary, <code>swotr</code>’s dA-related functions include an argument specifying where to set <code>dA = 0</code>. Options are “first” for the first observation in time (this is typically the default), “minimum” or “median”. Existing DAWG matrices of <code>dA</code> can have their zero point adjusted via <code>rezero_dA</code>.</p>
+<p>Since the zero reference of <code>dA</code> is arbitrary, <strong>swotr</strong>’s dA-related functions include an argument specifying where to set <code>dA = 0</code>. Options are “first” for the first observation in time (this is typically the default), “minimum” or “median”. Existing DAWG matrices of <code>dA</code> can have their zero point adjusted via <code>rezero_dA</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(<span class="kw"><a href="../reference/rezero_dA.html">rezero_dA</a></span>(dAmat, <span class="dt">zer =</span> <span class="st">"minimum"</span>))
 <span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(<span class="kw"><a href="../reference/rezero_dA.html">rezero_dA</a></span>(dAmat, <span class="dt">zer =</span> <span class="st">"median"</span>))</code></pre></div>
 <p><img src="swotlists_files/figure-html/unnamed-chunk-18-1.png" width="288"><img src="swotlists_files/figure-html/unnamed-chunk-18-2.png" width="288"></p>
@@ -246,7 +251,7 @@ saclist7 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sw
 <div id="interfacing-with-bamr" class="section level2">
 <h2 class="hasAnchor">
 <a href="#interfacing-with-bamr" class="anchor"></a>Interfacing with bamr</h2>
-<p>The <code>swotr</code> package is designed to interface with the <a href="http://github.com/markwh/bamr">bamr</a> package for estimation of flow-law parameters and discharge. To turn a swotlist into a <code>bamdata</code> object, use swot_bamdata:</p>
+<p>The <strong>swotr</strong> package is designed to interface with the <a href="http://github.com/markwh/bamr">bamr</a> package for estimation of flow-law parameters and discharge. To turn a swotlist into a <code>bamdata</code> object, use swot_bamdata:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bamr)
 sacbd &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swot_bamdata.html">swot_bamdata</a></span>(saclist3)
 sac_est &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/bamr/topics/bam_estimate">bam_estimate</a></span>(sacbd, <span class="dt">variant =</span> <span class="st">"manning"</span>, <span class="dt">iter =</span> <span class="dv">2000</span>)
@@ -261,7 +266,8 @@ sac_est &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocu
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#dawg-matrices">DAWG matrices</a></li>
+<li><a href="#swot-like-data">SWOT-like data</a></li>
+      <li><a href="#dawg-matrices">DAWG matrices</a></li>
       <li><a href="#swotlists">swotlists</a></li>
       <li><a href="#tidying-and-untidying-swotlists">Tidying and untidying swotlists</a></li>
       <li><a href="#netcdfs">netcdfs</a></li>

@@ -1,5 +1,5 @@
 ---
-title: "SWOTlists"
+title: "swotlists"
 author: "Mark Hagemann"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -19,9 +19,13 @@ knitr::opts_chunk$set(
 
 ```
 
+## SWOT-like data
+
+**swotr** is a package for working with SWOT-like data. Broadly, this means data observed at discrete times and locations within a river or river network. Data do not need to come from satellite remote sensing in order to be SWOT-like; the term can include in-situ, model-output, or purely synthetic data. But the underlying motivation is the upcoming SWOT satellite mission, so satellite remote sensing of discharge and hydrologic paramters is the presumed purpose in **swotr**'s development.
+
 ## DAWG matrices
 
-SWOT-like datasets contain variables defined at specific points in time and space. The Discharge Algorithm Working Group (DAWG) has adopted the convention of formatting such data as space-down, time-across matrices. I will refer to such a space-down, time-across matrix as a DAWG matrix. `swotr` contains a handy function for plotting DAWG matrices; that function is `plot_DAWG`. For example, we can generate a random DAWG matrix indexed in 4 locations and 5 times as follows:
+SWOT-like datasets contain variables defined at specific points in time and space. The Discharge Algorithm Working Group (DAWG) has adopted the convention of formatting such data as space-down, time-across matrices. I will refer to such a space-down, time-across matrix as a DAWG matrix. **swotr** contains a handy function for plotting DAWG matrices; that function is `plot_DAWG`. For example, we can generate a random DAWG matrix indexed in 4 locations and 5 times as follows:
 
 ```{r}
 library(dplyr)
@@ -49,7 +53,7 @@ Unfortunately, `swot_vec2mat` is too dumb to work if `pattern` has the same numb
 
 ## swotlists
 
-A swotlist is essentially a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It's just a kind of list that many `swotr` functions take as input. For example, the following is a perfectly valid swotlist. 
+A swotlist is essentially a named list of DAWG matrices. This is not a formal object class and is flexible as to what variables it contains. It's just a kind of list that many **swotr** functions take as input. For example, the following is a perfectly valid swotlist. 
 
 ```{r}
 list1 <- list(var1 = mat1, var2 = mat1 + rnorm(20))
@@ -63,11 +67,11 @@ swot_plot(list1)
 
 A swotlist is a compact, flexible, and easily accessible way of storing SWOT-like data. But it is limited in that it can only contain matrices with the same dimensions as one another. Thanks to easy matrix representation of vectors (via `swot_vec2mat`) swotlists can represent a surprising variety of variables. 
 
-Although there's no requirement to what a swotlist can contain, some `swotr` functions (and other functions that may be added to swotr or released in a companion package in the future) expect certain DAWG matrices to be present. 
+Although there's no requirement to what variables a swotlist can contain, some **swotr** functions (and other functions that may be added to swotr or released in a companion package in the future) expect certain DAWG matrices to be present. 
 
 ## Tidying and untidying swotlists
 
-Although a handy data format, swotlists are not perfect for using with many R utilities that expect `data.frame`s and related "tidy" tabular data representations. (See [the tidyverse](https://www.tidyverse.org/) for some examples of how tidiness has permeated the R ecosystem.) `swotr` has two functions for switching between swotlist representation and tidy representation of SWOT-like data. To turn a swotlist into a tidy `data.frame`, use `swot_tidy`.
+Although a handy data format, swotlists are not perfect for using with many R utilities that expect `data.frame`s and related ["tidy"](http://vita.had.co.nz/papers/tidy-data.pdf) tabular data representations. (See [the tidyverse](https://www.tidyverse.org/) for some examples of how tidiness has permeated the R ecosystem.) **swotr** has two functions for switching between swotlist representation and tidy representation of SWOT-like data. To turn a swotlist into a tidy `data.frame`, use `swot_tidy`.
 
 ```{r}
 tidydf1 <- swot_tidy(list1)
@@ -80,11 +84,11 @@ To go back to the original swotlist for, use `swot_untidy`.
 str(swot_untidy(tidydf1))
 ```
 
-`swot_tidy` is used under the hood for many of `swotr`'s plotting functions (and some other functions), since ggplot2 takes a `data.frame` as input.
+`swot_tidy` is used under the hood for many of **swotr**'s plotting functions (and some other functions), since ggplot2 takes a `data.frame` as input.
 
 ## netcdfs
 
-`swotr` contains functions to make reading SWOT-like netcdf files easy. But in order to use these you'll need to have the `ncdf4` package installed. This in turn requires that you have the netcdf library installed on your computer. 
+**swotr** contains functions to make reading SWOT-like netcdf files easy. But in order to use these you'll need to have the `ncdf4` package installed. This in turn requires that you have the netcdf library installed on your computer. 
 
 The `nc_list` function reads all data from a netcdf file into a single list. 
 
@@ -173,7 +177,7 @@ saclist7 <- swot_purge_nas(saclist5, purge = "locs") # Result is equivalent to s
 
 ## dA operations
 
-`swotr` contains a few functions for working with partial cross-sectional area (`dA`) observations. 
+**swotr** contains a few functions for working with partial cross-sectional area (`dA`) observations. 
 
 First, `dA` can be calculated from height and width observations via `calcdA_vec` (for single-location vectors) and `calcdA_mat` (for DAWG matrices). ***Note that the summation-as-integration method used by these functions is not robust to height and width measurement error and should be used with this imprecision in mind.***
 
@@ -182,7 +186,7 @@ dAmat <- calcdA_mat(w = saclist2$W, h = saclist2$H)
 plot_DAWG(dAmat)
 ```
 
-Since the zero reference of `dA` is arbitrary, `swotr`'s dA-related functions include an argument specifying where to set `dA = 0`. Options are "first" for the first observation in time  (this is typically the default), "minimum" or "median". Existing DAWG matrices of `dA` can have their zero point adjusted via `rezero_dA`. 
+Since the zero reference of `dA` is arbitrary, **swotr**'s dA-related functions include an argument specifying where to set `dA = 0`. Options are "first" for the first observation in time  (this is typically the default), "minimum" or "median". Existing DAWG matrices of `dA` can have their zero point adjusted via `rezero_dA`. 
 
 ```{r, fig.width = 3, fig.show = "hold"}
 plot_DAWG(rezero_dA(dAmat, zer = "minimum"))
@@ -197,7 +201,7 @@ realA0(saclist2, zero = "first")
 
 ## Interfacing with bamr
 
-The `swotr` package is designed to interface with the [bamr](http://github.com/markwh/bamr) package for estimation of flow-law parameters and discharge. To turn a swotlist into a `bamdata` object, use swot_bamdata:
+The **swotr** package is designed to interface with the [bamr](http://github.com/markwh/bamr) package for estimation of flow-law parameters and discharge. To turn a swotlist into a `bamdata` object, use swot_bamdata:
 
 ```{r, echo = FALSE}
 set.seed(36821)
