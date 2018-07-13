@@ -23,3 +23,5 @@ Suggests: bamr,
     rmarkdown,
     ncdf4
 VignetteBuilder: knitr
+URL: https://github.com/markwh/swotr
+BugReports: https://github.com/markwh/swotr/issues

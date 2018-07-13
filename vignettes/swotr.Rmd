@@ -1,5 +1,5 @@
 ---
-title: "swotlists"
+title: "swotr Introduction"
 author: "Mark Hagemann"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette

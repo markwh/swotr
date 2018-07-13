@@ -23,6 +23,7 @@ use_vignette("test") # Just so I can see the hints in the default file. To be de
 file.copy("../SWOT/data/ncdata/SacramentoDownstream.nc", to = "inst/extdata")
 
 # Build pkgdown site
+usethis::use_github_links()
 pkgdown::build_site()
 
 # Document and install
