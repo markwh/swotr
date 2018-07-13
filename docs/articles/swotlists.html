@@ -72,7 +72,7 @@
       <h1>swotlists</h1>
                         <h4 class="author">Mark Hagemann</h4>
             
-            <h4 class="date">2018-07-12</h4>
+            <h4 class="date">2018-07-13</h4>
       
       
       <div class="hidden name"><code>swotlists.Rmd</code></div>
@@ -135,15 +135,15 @@ space_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidydf1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swot_tidy.html">swot_tidy</a></span>(list1)
 <span class="kw">str</span>(tidydf1)
 <span class="co">#&gt; 'data.frame':    20 obs. of  4 variables:</span>
-<span class="co">#&gt;  $ var1: num  0.353 -0.811 0.16 0.941 0.26 ...</span>
-<span class="co">#&gt;  $ var2: num  -0.2893 -0.6195 0.1755 1.2116 -0.0138 ...</span>
+<span class="co">#&gt;  $ var1: num  -2.404 -1.481 -0.874 -0.507 0.115 ...</span>
+<span class="co">#&gt;  $ var2: num  -2.533 -0.91 -0.508 -0.547 -0.435 ...</span>
 <span class="co">#&gt;  $ time: int  1 1 1 1 2 2 2 2 3 3 ...</span>
 <span class="co">#&gt;  $ loc : int  1 2 3 4 1 2 3 4 1 2 ...</span></code></pre></div>
 <p>To go back to the original swotlist for, use <code>swot_untidy</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw"><a href="../reference/swot_untidy.html">swot_untidy</a></span>(tidydf1))
 <span class="co">#&gt; List of 2</span>
-<span class="co">#&gt;  $ var1: num [1:4, 1:5] 0.353 -0.811 0.16 0.941 0.26 ...</span>
-<span class="co">#&gt;  $ var2: num [1:4, 1:5] -0.2893 -0.6195 0.1755 1.2116 -0.0138 ...</span></code></pre></div>
+<span class="co">#&gt;  $ var1: num [1:4, 1:5] -2.404 -1.481 -0.874 -0.507 0.115 ...</span>
+<span class="co">#&gt;  $ var2: num [1:4, 1:5] -2.533 -0.91 -0.508 -0.547 -0.435 ...</span></code></pre></div>
 <p><code>swot_tidy</code> is used under the hood for many of <strong>swotr</strong>’s plotting functions (and some other functions), since ggplot2 takes a <code>data.frame</code> as input.</p>
 </div>
 <div id="netcdfs" class="section level2">
@@ -218,7 +218,7 @@ saclist3 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sw
 <span class="kw"><a href="../reference/swot_plot.html">swot_plot</a></span>(saclist3)</code></pre></div>
 <p><img src="swotlists_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
 <p>And now the anomalous slopes are gone, as well as all other variables’ data from those 4 times.</p>
-<p>If we thought the entire reach was bad we can removed 1 of 9 reaches instead of 4 of 154 times:</p>
+<p>If we thought the entire reach was bad we can remove 1 of 9 reaches instead of 4 of 154 times:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">saclist4 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swot_sset.html">swot_sset</a></span>(saclist2, <span class="dt">keeplocs =</span> <span class="op">-</span><span class="dv">1</span>) <span class="co"># again, negative to keep everything except 1</span>
 
 <span class="kw"><a href="../reference/swot_plot.html">swot_plot</a></span>(saclist4)</code></pre></div>
@@ -240,8 +240,8 @@ saclist7 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sw
 <span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(dAmat)</code></pre></div>
 <p><img src="swotlists_files/figure-html/unnamed-chunk-17-1.png" width="576"></p>
 <p>Since the zero reference of <code>dA</code> is arbitrary, <strong>swotr</strong>’s dA-related functions include an argument specifying where to set <code>dA = 0</code>. Options are “first” for the first observation in time (this is typically the default), “minimum” or “median”. Existing DAWG matrices of <code>dA</code> can have their zero point adjusted via <code>rezero_dA</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(<span class="kw"><a href="../reference/rezero_dA.html">rezero_dA</a></span>(dAmat, <span class="dt">zer =</span> <span class="st">"minimum"</span>))
-<span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(<span class="kw"><a href="../reference/rezero_dA.html">rezero_dA</a></span>(dAmat, <span class="dt">zer =</span> <span class="st">"median"</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(<span class="kw"><a href="../reference/rezero_dA.html">rezero_dA</a></span>(dAmat, <span class="dt">zero =</span> <span class="st">"minimum"</span>))
+<span class="kw"><a href="../reference/plot_DAWG.html">plot_DAWG</a></span>(<span class="kw"><a href="../reference/rezero_dA.html">rezero_dA</a></span>(dAmat, <span class="dt">zero =</span> <span class="st">"median"</span>))</code></pre></div>
 <p><img src="swotlists_files/figure-html/unnamed-chunk-18-1.png" width="288"><img src="swotlists_files/figure-html/unnamed-chunk-18-2.png" width="288"></p>
 <p>The full cross-sectional area is obtained by adding <code>dA</code> to <span class="math inline">\(A_0\)</span>, the constant-in-time unobserved part of cross-sectional area. The value of <span class="math inline">\(A_0\)</span> depends on where dA is referenced to zero. If a swotlist contains a cross-sectional area DAWG matrix called <code>A</code>, the true <span class="math inline">\(A_0\)</span> vector can be obtained using the function <code>realA0</code>. This also has a <code>zero</code> argument, which should match the zero reference of the swotlist’s <code>dA</code> matrix.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/realA0.html">realA0</a></span>(saclist2, <span class="dt">zero =</span> <span class="st">"first"</span>)

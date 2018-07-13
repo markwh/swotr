@@ -22,6 +22,8 @@ use_vignette("test") # Just so I can see the hints in the default file. To be de
 #' Load the extdata folder with an example netcdf
 file.copy("../SWOT/data/ncdata/SacramentoDownstream.nc", to = "inst/extdata")
 
+# Build pkgdown site
+pkgdown::build_site()
 
 # Document and install
 devtools::document()

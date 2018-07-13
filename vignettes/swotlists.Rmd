@@ -151,7 +151,7 @@ swot_plot(saclist3)
 
 And now the anomalous slopes are gone, as well as all other variables' data from those 4 times. 
 
-If we thought the entire reach was bad we can removed 1 of 9 reaches instead of 4 of 154 times:
+If we thought the entire reach was bad we can remove 1 of 9 reaches instead of 4 of 154 times:
 
 ```{r}
 saclist4 <- swot_sset(saclist2, keeplocs = -1) # again, negative to keep everything except 1
@@ -189,8 +189,8 @@ plot_DAWG(dAmat)
 Since the zero reference of `dA` is arbitrary, **swotr**'s dA-related functions include an argument specifying where to set `dA = 0`. Options are "first" for the first observation in time  (this is typically the default), "minimum" or "median". Existing DAWG matrices of `dA` can have their zero point adjusted via `rezero_dA`. 
 
 ```{r, fig.width = 3, fig.show = "hold"}
-plot_DAWG(rezero_dA(dAmat, zer = "minimum"))
-plot_DAWG(rezero_dA(dAmat, zer = "median"))
+plot_DAWG(rezero_dA(dAmat, zero = "minimum"))
+plot_DAWG(rezero_dA(dAmat, zero = "median"))
 ```
 
 The full cross-sectional area is obtained by adding `dA` to $A_0$, the constant-in-time unobserved part of cross-sectional area. The value of $A_0$ depends on where dA is referenced to zero. If a swotlist contains a cross-sectional area DAWG matrix called `A`, the true $A_0$ vector can be obtained using the function `realA0`. This also has a `zero` argument, which should match the zero reference of the swotlist's `dA` matrix. 
