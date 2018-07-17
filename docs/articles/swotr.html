@@ -70,7 +70,7 @@
       <h1>swotr Introduction</h1>
                         <h4 class="author">Mark Hagemann</h4>
             
-            <h4 class="date">2018-07-13</h4>
+            <h4 class="date">2018-07-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/markwh/swotr/blob/master/vignettes/swotr.Rmd"><code>vignettes/swotr.Rmd</code></a></small>
       <div class="hidden name"><code>swotr.Rmd</code></div>
@@ -133,15 +133,15 @@ space_mat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/s
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tidydf1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swot_tidy.html">swot_tidy</a></span>(list1)
 <span class="kw">str</span>(tidydf1)
 <span class="co">#&gt; 'data.frame':    20 obs. of  4 variables:</span>
-<span class="co">#&gt;  $ var1: num  1.257 -0.15 0.675 0.166 1.514 ...</span>
-<span class="co">#&gt;  $ var2: num  0.765 0.792 0.505 -1.208 1.804 ...</span>
+<span class="co">#&gt;  $ var1: num  -0.193 0.54 -1.346 -0.99 -0.135 ...</span>
+<span class="co">#&gt;  $ var2: num  0.637 0.415 -0.239 -0.873 -1.441 ...</span>
 <span class="co">#&gt;  $ time: int  1 1 1 1 2 2 2 2 3 3 ...</span>
 <span class="co">#&gt;  $ loc : int  1 2 3 4 1 2 3 4 1 2 ...</span></code></pre></div>
 <p>To go back to the original swotlist for, use <code>swot_untidy</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw"><a href="../reference/swot_untidy.html">swot_untidy</a></span>(tidydf1))
 <span class="co">#&gt; List of 2</span>
-<span class="co">#&gt;  $ var1: num [1:4, 1:5] 1.257 -0.15 0.675 0.166 1.514 ...</span>
-<span class="co">#&gt;  $ var2: num [1:4, 1:5] 0.765 0.792 0.505 -1.208 1.804 ...</span></code></pre></div>
+<span class="co">#&gt;  $ var1: num [1:4, 1:5] -0.193 0.54 -1.346 -0.99 -0.135 ...</span>
+<span class="co">#&gt;  $ var2: num [1:4, 1:5] 0.637 0.415 -0.239 -0.873 -1.441 ...</span></code></pre></div>
 <p><code>swot_tidy</code> is used under the hood for many of <strong>swotr</strong>’s plotting functions (and some other functions), since ggplot2 takes a <code>data.frame</code> as input.</p>
 </div>
 <div id="netcdfs" class="section level2">

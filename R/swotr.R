@@ -202,6 +202,7 @@ rezero_dA <- function(dAmat, zero = c("first", "minimum", "median")) {
 #' @param dAmat a matrix of dA observations
 #' @param zero If not "same" (the default), passed to rezero_dA before
 #'   calculating.
+#' @export
 swot_A <- function(A0vec, dAmat, zero = "same") {
 
   if (!zero == "same") {
