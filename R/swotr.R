@@ -161,7 +161,7 @@ swot_timelag <- function(swotlist, lags) {
 #' @param zero Where to reference the zero value of dA?
 #' @export
 realA0 <- function(swotlist,
-                   zero = c("first", "minimum", "median")) {
+                   zero = c("none", "first", "minimum", "median")) {
   zero = match.arg(zero)
 
   if (is.null(swotlist$A)) {
